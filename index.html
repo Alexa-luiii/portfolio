@@ -347,7 +347,7 @@
 
         .hero-container {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
+            grid-template-columns: 7fr 3fr;
             align-items: center;
             gap: 40px;
             z-index: 2;
@@ -356,7 +356,7 @@
 
         .hero-badge {
             display: inline-block;
-            padding: 6px 16px;
+            padding: 10px 20px;
             border: 1px solid var(--accent-primary);
             border-radius: 20px;
             font-size: 12px;
@@ -364,7 +364,8 @@
             color: var(--accent-primary);
             margin-bottom: 20px;
             opacity: 0;
-            animation: fadeInUp 0.6s forwards 0.2s;
+            background: none;
+            animation: fadeInUp 0.6s forwards 0s;
         }
 
         .hero-title {
@@ -376,7 +377,7 @@
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: textGradient 5s linear infinite, fadeInUp 0.6s forwards 0.4s;
+            animation: textGradient 5s linear infinite, fadeInUp 0.6s forwards 0s;
             opacity: 0;
         }
 
@@ -386,14 +387,14 @@
             margin-bottom: 40px;
             max-width: 600px;
             opacity: 0;
-            animation: fadeInUp 0.6s forwards 0.6s;
+            animation: fadeInUp 0.6s forwards 0.2s;
         }
 
         .hero-btns {
             display: flex;
             gap: 20px;
             opacity: 0;
-            animation: fadeInUp 0.6s forwards 0.8s;
+            animation: fadeInUp 0.6s forwards 0.4s;
         }
 
         .hero-right {
@@ -1429,6 +1430,19 @@
                         <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
+
+                <!-- Card 6: Fitness Tracker App -->
+                <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('fitness-tracker')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #FF6B6B, #FFD93D)">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="card-overlay">
+                        <span class="card-category">Mobile App</span>
+                        <h3>Fitness Tracker</h3>
+                        <p>Real-time activity tracking and nutrition guide</p>
+                        <button class="card-btn">View Project ↗</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1686,6 +1700,12 @@
                 video: './videos/novadash-demo.mp4',
                 category: 'Landing Page',
                 description: 'A premium, high-converting landing page for SaaS analytics. Optimized for conversion with stunning 3D visuals, smooth scroll interactions, and a mobile-first responsive architecture.'
+            },
+            'fitness-tracker': {
+                title: 'Fitness Tracker App',
+                video: './videos/fitness-tracker-demo.mp4',
+                category: 'Mobile Application',
+                description: 'A feature-rich fitness application designed for health enthusiasts. Includes live heart rate monitoring, workout logs, and personalized nutrition plans with a sleek, interactive dark mode interface.'
             }
         };
 
@@ -1858,13 +1878,19 @@
             el.style.transform = 'translateY(40px)';
             el.style.transition = `all 0.8s var(--transition-curve)`;
 
-            // Special stagger and scale for portfolio cards
+            // Special stagger for service cards (200ms)
+            if (el.classList.contains('service-card')) {
+                el.style.transitionDelay = `${index * 0.2}s`;
+            }
+
+            // Special stagger and scale for portfolio cards (0.4s duration, 100ms stagger)
             if (el.classList.contains('portfolio-card')) {
+                el.style.transition = `all 0.4s var(--transition-curve)`;
                 el.style.transitionDelay = `${(index % 3) * 0.1}s`;
                 el.style.transform = 'scale(0.8)';
             }
 
-            // Special spin for skill items
+            // Special spin for skill items (50ms stagger)
             if (el.classList.contains('skill-item')) {
                 el.style.transitionDelay = `${(index % 4) * 0.05}s`;
                 el.style.transform = 'rotate(-360deg) scale(0.5)';
