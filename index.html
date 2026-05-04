@@ -40,6 +40,16 @@
             100% { transform: translateY(0); }
         }
 
+        @keyframes spinFadeIn {
+            from { transform: rotate(-360deg) scale(0.5); opacity: 0; }
+            to { transform: rotate(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes scaleFadeIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
         @keyframes textGradient {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
@@ -715,7 +725,9 @@
             text-align: center;
             border-radius: 12px;
             aspect-ratio: 1/1;
-            transition: all var(--transition-speed) var(--transition-curve);
+            transition: border-color var(--transition-speed) var(--transition-curve),
+                        box-shadow var(--transition-speed) var(--transition-curve),
+                        transform var(--transition-speed) var(--transition-curve);
         }
 
         .skill-item:hover {
@@ -1040,6 +1052,190 @@
             height: 120px;
             resize: none;
         }
+        /* Video Modal Styles */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content-box {
+            position: relative;
+            z-index: 2001;
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 2002;
+        }
+
+        .modal-close:hover {
+            color: var(--text-color);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            margin: 0 0 20px 0;
+            color: var(--text-color);
+            font-family: 'Playfair Display', serif;
+        }
+
+        #projectVideo {
+            width: 100%;
+            border-radius: 8px;
+            margin: 20px 0;
+            background: #000;
+            aspect-ratio: 16/9;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+        }
+
+        .modal-body p {
+            color: var(--text-color-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--accent-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 20, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+        }
+
+        .portfolio-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-category {
+            font-size: 12px;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .card-overlay h3 {
+            font-size: 22px;
+            color: var(--text-color);
+            margin: 10px 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-overlay p {
+            font-size: 14px;
+            color: var(--text-color-muted);
+            margin: 10px 0 20px;
+        }
+
+        .card-btn {
+            background: var(--accent-primary);
+            color: var(--primary-dark);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .card-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content-box {
+                max-width: 95vw;
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1168,86 +1364,69 @@
                     <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
                 </div>
             </div>
-            <div class="portfolio-grid">
-                <!-- Project 1 -->
-                <div class="portfolio-card reveal-up" data-category="saas">
-                    <div class="portfolio-img"><i class="fas fa-chart-bar"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">SaaS</span>
-                        <h3 class="portfolio-name">Analytics Dashboard</h3>
-                        <div class="portfolio-btn">View Project</div>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- Card 1: Team Sync Dashboard -->
+                <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('team-sync')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #9d88d4, #7F77DD)">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="card-overlay">
+                        <span class="card-category">SaaS</span>
+                        <h3>Team Sync Dashboard</h3>
+                        <p>Global meeting scheduler with time zone sync</p>
+                        <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="portfolio-card reveal-up" data-category="landing">
-                    <img src="novadash.png" alt="NovaDash Landing Page" class="portfolio-img">
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Landing Page</span>
-                        <h3 class="portfolio-name">NovaDash</h3>
-                        <div class="portfolio-btn">View Project</div>
+
+                <!-- Card 2: 404 Game Page -->
+                <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('404-game')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #d4af37, #c0b368)">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="card-overlay">
+                        <span class="card-category">SaaS</span>
+                        <h3>404 Game Page</h3>
+                        <p>Interactive error page with redirect gamification</p>
+                        <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
-                <!-- Project 3 -->
-                <div class="portfolio-card reveal-up" data-category="mobile">
-                    <div class="portfolio-img"><i class="fas fa-dumbbell"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Mobile App</span>
-                        <h3 class="portfolio-name">Fitness Tracker</h3>
-                        <div class="portfolio-btn">View Project</div>
+
+                <!-- Card 3: TLC Prep Mobile App -->
+                <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('tlc-prep')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #1D9E75, #5DCAA5)">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="card-overlay">
+                        <span class="card-category">Mobile App</span>
+                        <h3>TLC Prep</h3>
+                        <p>Driver license quiz preparation app</p>
+                        <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
-                <!-- Project 4 -->
-                <div class="portfolio-card reveal-up" data-category="saas">
-                    <div class="portfolio-img"><i class="fas fa-tasks"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">SaaS</span>
-                        <h3 class="portfolio-name">Task Manager Pro</h3>
-                        <div class="portfolio-btn">View Project</div>
+
+                <!-- Card 4: ChatStudio App -->
+                <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('chatstudio')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #378ADD, #85B7EB)">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="card-overlay">
+                        <span class="card-category">Mobile App</span>
+                        <h3>ChatStudio</h3>
+                        <p>Chat, stories & meme sharing social app</p>
+                        <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
-                <!-- Project 5 -->
-                <div class="portfolio-card reveal-up" data-category="landing">
-                    <div class="portfolio-img"><i class="fas fa-shopping-cart"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Landing Page</span>
-                        <h3 class="portfolio-name">E-commerce Store</h3>
-                        <div class="portfolio-btn">View Project</div>
+
+                <!-- Card 5: NovaDash -->
+                <div class="portfolio-card reveal-up" data-category="landing" onclick="openVideoModal('novadash')">
+                    <div class="portfolio-img" style="background: linear-gradient(135deg, #E24B4A, #EF9F27)">
+                        <i class="fas fa-rocket"></i>
                     </div>
-                </div>
-                <!-- Project 6 -->
-                <div class="portfolio-card reveal-up" data-category="mobile">
-                    <div class="portfolio-img"><i class="fas fa-wallet"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Mobile App</span>
-                        <h3 class="portfolio-name">Fintech Wallet</h3>
-                        <div class="portfolio-btn">View Project</div>
-                    </div>
-                </div>
-                <!-- Project 7 -->
-                <div class="portfolio-card reveal-up" data-category="saas">
-                    <div class="portfolio-img"><i class="fas fa-project-diagram"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">SaaS</span>
-                        <h3 class="portfolio-name">Workflow Automator</h3>
-                        <div class="portfolio-btn">View Project</div>
-                    </div>
-                </div>
-                <!-- Project 8 -->
-                <div class="portfolio-card reveal-up" data-category="landing">
-                    <div class="portfolio-img"><i class="fas fa-rocket"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Landing Page</span>
-                        <h3 class="portfolio-name">AI Startup Launch</h3>
-                        <div class="portfolio-btn">View Project</div>
-                    </div>
-                </div>
-                <!-- Project 9 -->
-                <div class="portfolio-card reveal-up" data-category="mobile">
-                    <div class="portfolio-img"><i class="fas fa-utensils"></i></div>
-                    <div class="portfolio-overlay">
-                        <span class="portfolio-tag">Mobile App</span>
-                        <h3 class="portfolio-name">Recipe Finder</h3>
-                        <div class="portfolio-btn">View Project</div>
+                    <div class="card-overlay">
+                        <span class="card-category">Landing Page</span>
+                        <h3>NovaDash</h3>
+                        <p>High-converting SaaS analytics landing page</p>
+                        <button class="card-btn">View Project ↗</button>
                     </div>
                 </div>
             </div>
@@ -1378,15 +1557,22 @@
         </div>
     </section>
 
-    <!-- Project Modal -->
-    <div class="modal" id="project-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-project-modal">&times;</span>
-            <div id="modal-project-details">
-                <h2 id="modal-project-title" class="font-playfair" style="font-size: 36px; margin-bottom: 20px;"></h2>
-                <div id="modal-project-img" style="width: 100%; aspect-ratio: 16/9; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-size: 64px; color: var(--accent-primary);"></div>
-                <p id="modal-project-desc" style="color: var(--text-color-muted); margin-bottom: 20px;"></p>
-                <div id="modal-project-tags" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+    <!-- Video Modal Player -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-overlay" onclick="closeVideoModal()"></div>
+        <div class="modal-content-box">
+            <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+            <h2 id="modalTitle" class="modal-title">Project Name</h2>
+            <video id="projectVideo" controls autoplay muted loop playsinline>
+                <source id="videoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="modal-body">
+                <p id="modalDescription">Project description goes here...</p>
+            </div>
+            <div class="modal-footer">
+                <span id="modalCategory" class="category-badge">Category</span>
+                <button class="btn btn-primary" onclick="scrollToContact()">Contact for Custom Build</button>
             </div>
         </div>
     </div>
@@ -1464,11 +1650,87 @@
         const sideMenuOverlay = document.getElementById('side-menu-overlay');
         const filterBtns = document.querySelectorAll('.filter-btn');
         const portfolioCards = document.querySelectorAll('.portfolio-card');
-        const projectModal = document.getElementById('project-modal');
+        const videoModal = document.getElementById('videoModal');
         const contactModal = document.getElementById('contact-modal');
-        const closeProjectModal = document.getElementById('close-project-modal');
         const closeContactModal = document.getElementById('close-contact-modal');
         const startProjectBtns = document.querySelectorAll('button.btn-primary');
+
+        // Project Data for Video Modal
+        const projectData = {
+            'team-sync': {
+                title: 'Team Sync Dashboard',
+                video: './videos/team-sync-demo.mp4',
+                category: 'SaaS Dashboard',
+                description: 'A high-performance team management dashboard featuring real-time meeting scheduling, automated time zone synchronization, and an intuitive task-tracking interface. Built for remote teams needing seamless global coordination.'
+            },
+            '404-game': {
+                title: '404 Game Page',
+                video: './videos/404-game-demo.mp4',
+                category: 'Interactive Web',
+                description: 'Transformed a standard 404 error page into an engaging user experience. This interactive game page keeps users on the site longer by gamifying the redirect process, reducing bounce rates significantly.'
+            },
+            'tlc-prep': {
+                title: 'TLC Prep Mobile App',
+                video: './videos/tlc-prep-demo.mp4',
+                category: 'Mobile Application',
+                description: 'A specialized educational mobile app designed for driver license candidates. Features include real-time quiz results, progress tracking, and an extensive library of mock tests optimized for mobile performance.'
+            },
+            'chatstudio': {
+                title: 'ChatStudio Social App',
+                video: './videos/chatstudio-demo.mp4',
+                category: 'Social Media App',
+                description: 'A comprehensive social platform that combines real-time messaging, user stories, and meme sharing. Features a clean, modern UI with smooth animations and high-speed media loading capabilities.'
+            },
+            'novadash': {
+                title: 'NovaDash Landing Page',
+                video: './videos/novadash-demo.mp4',
+                category: 'Landing Page',
+                description: 'A premium, high-converting landing page for SaaS analytics. Optimized for conversion with stunning 3D visuals, smooth scroll interactions, and a mobile-first responsive architecture.'
+            }
+        };
+
+        function openVideoModal(projectId) {
+            const data = projectData[projectId];
+            if (!data) return;
+
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDescription').textContent = data.description;
+            document.getElementById('modalCategory').textContent = data.category;
+
+            const video = document.getElementById('projectVideo');
+            const source = document.getElementById('videoSource');
+
+            source.src = data.video;
+            video.load();
+
+            document.getElementById('videoModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('projectVideo');
+
+            modal.classList.remove('active');
+            video.pause();
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal on ESC key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+                closeModals();
+            }
+        });
+
+        function scrollToContact() {
+            closeVideoModal();
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
         // Theme Toggle Logic
         const toggleTheme = () => {
@@ -1591,10 +1853,23 @@
         }, observerOptions);
 
         // Apply initial styles for animations
-        document.querySelectorAll('.reveal-up').forEach(el => {
+        document.querySelectorAll('.reveal-up').forEach((el, index) => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(40px)';
-            el.style.transition = 'all 0.8s var(--transition-curve)';
+            el.style.transition = `all 0.8s var(--transition-curve)`;
+
+            // Special stagger and scale for portfolio cards
+            if (el.classList.contains('portfolio-card')) {
+                el.style.transitionDelay = `${(index % 3) * 0.1}s`;
+                el.style.transform = 'scale(0.8)';
+            }
+
+            // Special spin for skill items
+            if (el.classList.contains('skill-item')) {
+                el.style.transitionDelay = `${(index % 4) * 0.05}s`;
+                el.style.transform = 'rotate(-360deg) scale(0.5)';
+            }
+
             observer.observe(el);
         });
 
@@ -1625,36 +1900,16 @@
         setInterval(nextSlide, 4000);
 
         // Modal Logic
-        const openProjectModal = (projectId) => {
-            const card = document.querySelector(`.portfolio-card[data-id="${projectId}"]`);
-            const title = card.querySelector('.portfolio-name').innerText;
-            const category = card.querySelector('.portfolio-tag').innerText;
-            const icon = card.querySelector('.portfolio-img i').className;
-
-            document.getElementById('modal-project-title').innerText = title;
-            document.getElementById('modal-project-img').innerHTML = `<i class="${icon}"></i>`;
-            document.getElementById('modal-project-desc').innerText = `Full details for ${title}. This project showcases premium design and high-conversion features tailored for ${category} clients.`;
-
-            projectModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        };
-
         const closeModals = () => {
-            projectModal.classList.remove('active');
+            closeVideoModal();
             contactModal.classList.remove('active');
             document.body.style.overflow = 'auto';
         };
 
-        portfolioCards.forEach((card, index) => {
-            card.setAttribute('data-id', index);
-            card.addEventListener('click', () => openProjectModal(index));
-        });
-
-        closeProjectModal.addEventListener('click', closeModals);
         closeContactModal.addEventListener('click', closeModals);
 
         window.addEventListener('click', (e) => {
-            if (e.target === projectModal || e.target === contactModal) closeModals();
+            if (e.target === videoModal || e.target === contactModal) closeModals();
         });
 
         // Contact Modal Logic
