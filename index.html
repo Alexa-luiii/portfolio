@@ -35,9 +35,11 @@
         }
 
         @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
+            0% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+            25% { transform: translateY(-10px) rotateX(5deg) rotateY(5deg); }
+            50% { transform: translateY(-20px) rotateX(0deg) rotateY(10deg); }
+            75% { transform: translateY(-10px) rotateX(-5deg) rotateY(5deg); }
+            100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
         }
 
         @keyframes spinFadeIn {
@@ -56,43 +58,54 @@
         }
 
         :root {
-            /* Luxury Dark Theme (Primary) */
-            --primary-dark: #0a0a14;
-            --secondary-dark: #1a1a2e;
-            --accent-primary: #d4af37;
-            --accent-secondary: #c0b368;
-            --accent-tertiary: #9d88d4;
-            --text-primary: #ffffff;
-            --text-secondary: #e0e0e0;
-            --text-muted: #9a9aaa;
-            --card-bg: #141428;
-            --border-light: rgba(212, 175, 55, 0.2);
+            /* Color Palette - Premium Silent (Muted Purples & Slates) */
+            --primary-dark: #0a0a0f;
+            --primary-light: #fcfcfd;
+
+            --secondary-dark: #12121a;
+            --secondary-light: #f4f4f7;
+
+            --accent-primary: #8b8b9e;
+            --accent-secondary: #6e6e80;
+            --accent-tertiary: #4a4a5e;
+
+            --text-primary-dark: #ffffff;
+            --text-secondary-dark: #b0b0bc;
+            --text-muted-dark: #6e6e80;
+
+            --text-primary-light: #12121a;
+            --text-secondary-light: #4a4a5e;
+            --text-muted-light: #8b8b9e;
+
+            --border-dark: rgba(139, 139, 158, 0.2);
+            --border-light: rgba(139, 139, 158, 0.25);
+            --border-light-theme: rgba(139, 139, 158, 0.1);
+
+            /* Spacing and sizing */
+            --border-radius: 12px;
             --transition-speed: 0.4s;
             --transition-curve: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-            /* Theme mapping */
+            /* Theme mapping (Default Dark) */
             --bg-color: var(--primary-dark);
             --bg-secondary: var(--secondary-dark);
-            --text-color: var(--text-primary);
-            --text-color-muted: var(--text-muted);
-            --card-background: var(--card-bg);
-            --border-color: var(--border-light);
+            --text-color: var(--text-primary-dark);
+            --text-color-muted: var(--text-secondary-dark);
+            --card-background: var(--secondary-dark);
+            --border-color: var(--border-dark);
+            --glass-bg: rgba(10, 10, 15, 0.8);
+            --shadow-mapped: rgba(0, 0, 0, 0.5);
         }
 
         [data-theme="light"] {
-            /* Light Theme Alternative */
-            --primary-light: #f8f8ff;
-            --secondary-light: #efefff;
-            --accent-light: #d4af37;
-            --text-dark: #1a1a2e;
-            --card-light-bg: #ffffff;
-
             --bg-color: var(--primary-light);
             --bg-secondary: var(--secondary-light);
-            --text-color: var(--text-dark);
-            --text-color-muted: #555566;
-            --card-background: var(--card-light-bg);
-            --border-color: rgba(212, 175, 55, 0.3);
+            --text-color: var(--text-primary-light);
+            --text-color-muted: var(--text-secondary-light);
+            --card-background: var(--primary-light);
+            --border-color: var(--border-light-theme);
+            --glass-bg: rgba(252, 252, 253, 0.8);
+            --shadow-mapped: rgba(139, 139, 158, 0.1);
         }
 
         * {
@@ -160,12 +173,12 @@
 
         .btn-primary {
             background-color: var(--accent-primary);
-            color: var(--primary-dark);
+            color: #ffffff;
         }
 
         .btn-primary:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px var(--shadow-mapped);
         }
 
         .btn-outline {
@@ -175,20 +188,15 @@
 
         .btn-outline:hover {
             background-color: var(--accent-primary);
-            color: var(--primary-dark);
+            color: #ffffff;
         }
 
         /* Glassmorphism */
         .glass {
-            background: rgba(20, 20, 40, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        [data-theme="light"] .glass {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
         }
 
         /* Navigation */
@@ -315,7 +323,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            background: var(--primary-dark);
+            background: var(--bg-color);
         }
 
         .hero::before {
@@ -326,23 +334,19 @@
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(circle at 20% 30%, rgba(157, 136, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, var(--secondary-dark) 0%, var(--primary-dark) 100%);
+                radial-gradient(circle at 20% 30%, rgba(139, 139, 158, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 139, 158, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-color) 100%);
             background-size: 200% 200%;
             animation: radialMesh 15s ease-in-out infinite;
             z-index: 0;
         }
 
-        [data-theme="light"] .hero {
-            background: var(--primary-light);
-        }
-
         [data-theme="light"] .hero::before {
             background:
-                radial-gradient(circle at 20% 30%, rgba(157, 136, 212, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, var(--secondary-light) 0%, var(--primary-light) 100%);
+                radial-gradient(circle at 20% 30%, rgba(139, 139, 158, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 139, 158, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-color) 100%);
         }
 
         .hero-container {
@@ -437,7 +441,7 @@
             top: 20px;
             right: 20px;
             background: var(--accent-primary);
-            color: var(--primary-dark);
+            color: #ffffff;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 10px;
@@ -626,7 +630,7 @@
 
         .filter-btn.active, .filter-btn:hover {
             background: var(--accent-primary);
-            color: var(--primary-dark);
+            color: #ffffff;
         }
 
         .portfolio-grid {
@@ -648,7 +652,7 @@
 
         .portfolio-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 60px var(--shadow-mapped);
         }
 
         .portfolio-img {
@@ -732,7 +736,7 @@
 
         .skill-item:hover {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 20px var(--border-color);
+            box-shadow: 0 0 20px var(--shadow-mapped);
             transform: translateY(-5px);
         }
 
@@ -862,7 +866,7 @@
 
         .contact-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px var(--border-color);
+            box-shadow: 0 0 20px var(--shadow-mapped);
         }
 
         .contact-card i {
@@ -877,7 +881,7 @@
 
         /* Footer */
         footer {
-            background: var(--primary-dark);
+            background: var(--bg-color);
             padding: 80px 0 40px;
             border-top: 1px solid var(--border-color);
         }
@@ -1093,15 +1097,15 @@
 .modal-content {
   position: relative;
   z-index: 1001;
-  background: #141428;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  border-radius: 12px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
   padding: 30px;
   max-width: 90vw;
   max-height: 90vh;
   overflow-y: auto;
   animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 20px 60px var(--shadow-mapped);
 }
 
 @keyframes slideUp {
@@ -1121,7 +1125,7 @@
   right: 15px;
   background: none;
   border: none;
-  color: #d4af37;
+  color: var(--accent-primary);
   font-size: 32px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -1135,7 +1139,7 @@
 }
 
 .modal-close:hover {
-  color: #ffffff;
+  color: var(--text-color);
   transform: scale(1.2);
 }
 
@@ -1143,7 +1147,7 @@
   font-size: 28px;
   font-weight: 600;
   margin: 0 0 20px 0;
-  color: #ffffff;
+  color: var(--text-color);
   margin-right: 40px;
 }
 
@@ -1161,7 +1165,7 @@
 
 .btn-contact:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 20px rgba(139, 139, 158, 0.5);
 }
 
 #projectVideo {
@@ -1202,7 +1206,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 10, 20, 0.85);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1243,7 +1247,7 @@
 
 .card-btn {
     background: var(--accent-primary);
-    color: var(--primary-dark);
+    color: #ffffff;
     border: none;
     padding: 10px 24px;
     border-radius: 6px;
@@ -1255,7 +1259,7 @@
 
 .card-btn:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 20px rgba(139, 139, 158, 0.4);
 }
     </style>
 </head>
@@ -1394,7 +1398,7 @@
 
               <!-- Card 1: Team Sync Dashboard -->
               <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('team-sync')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #9d88d4, #7F77DD); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #8b8b9e, #6d6d7f); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">SaaS</span>
                   <h3>Team Sync Dashboard</h3>
@@ -1405,7 +1409,7 @@
 
               <!-- Card 2: 404 Game Page -->
               <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('404-game')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #d4af37, #c0b368); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #8b8b9e, #a9a9b8); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">SaaS</span>
                   <h3>404 Game Page</h3>
@@ -1416,7 +1420,7 @@
 
               <!-- Card 3: TLC Prep Mobile App -->
               <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('tlc-prep')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #1D9E75, #5DCAA5); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #8b8b9e, #a9a9b8); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Mobile App</span>
                   <h3>TLC Prep</h3>
@@ -1427,7 +1431,7 @@
 
               <!-- Card 4: ChatStudio App -->
               <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('chatstudio')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #378ADD, #85B7EB); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #8b8b9e, #6d6d7f); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Mobile App</span>
                   <h3>ChatStudio</h3>
@@ -1438,22 +1442,11 @@
 
               <!-- Card 5: NovaDash -->
               <div class="portfolio-card reveal-up" data-category="landing" onclick="openVideoModal('novadash')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #E24B4A, #EF9F27); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #a9a9b8, #6d6d7f); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Landing Page</span>
                   <h3>NovaDash</h3>
                   <p>High-converting SaaS analytics landing page</p>
-                  <button class="card-btn" type="button">View Project ↗</button>
-                </div>
-              </div>
-
-              <!-- Card 6: Crypto Wallet -->
-              <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('crypto-wallet')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #FF6B6B, #FFD93D); width:100%; height:100%"></div>
-                <div class="card-overlay">
-                  <span class="card-category">Mobile App</span>
-                  <h3>Secure Wallet</h3>
-                  <p>Web3 cryptocurrency wallet with multi-chain support</p>
                   <button class="card-btn" type="button">View Project ↗</button>
                 </div>
               </div>
@@ -1566,20 +1559,20 @@
             <h2 class="contact-title font-playfair">Let's Create Something Amazing</h2>
             <p class="contact-subtitle">Have a project in mind? Let's talk about how I can help.</p>
             <div class="contact-methods">
-                <a href="mailto:zernanali@gmail.com" class="contact-card">
+                <a href="mailto:zernanali@gmail.com" class="contact-card reveal-up">
                     <i class="fas fa-envelope"></i>
                     <div>Email</div>
                     <p style="font-size: 14px; color: var(--text-color-muted);">zernanali@gmail.com</p>
                 </a>
-                <a href="https://instagram.com/zernanali" target="_blank" class="contact-card">
+                <a href="https://instagram.com/oops_my_code" target="_blank" class="contact-card reveal-up">
                     <i class="fab fa-instagram"></i>
                     <div>Instagram</div>
-                    <p style="font-size: 14px; color: var(--text-color-muted);">@zernanali</p>
+                    <p style="font-size: 14px; color: var(--text-color-muted);">@oops_my_code</p>
                 </a>
-                <a href="https://youtube.com/@zernanali" target="_blank" class="contact-card">
+                <a href="https://youtube.com/@oops_my_code" target="_blank" class="contact-card reveal-up">
                     <i class="fab fa-youtube"></i>
                     <div>YouTube</div>
-                    <p style="font-size: 14px; color: var(--text-color-muted);">@zernanali</p>
+                    <p style="font-size: 14px; color: var(--text-color-muted);">@oops_my_code</p>
                 </a>
             </div>
             <button class="btn btn-primary" style="padding: 20px 48px; font-size: 20px;">Start Your Project</button>
@@ -1602,9 +1595,9 @@
         <div class="modal-body">
           <p id="modalDescription" style="color:#9a9aaa;font-size:14px;line-height:1.6;margin:0 0 20px 0">Project description goes here.</p>
 
-          <div class="modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:20px;border-top:1px solid rgba(212,175,55,0.2)">
-            <span class="category-badge" id="modalCategory" style="display:inline-block;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);color:#d4af37;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;text-transform:uppercase">Category</span>
-            <button class="btn-contact" onclick="contactNow()" style="background:#d4af37;color:#0a0a14;border:none;padding:12px 28px;border-radius:6px;font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px">Contact for Custom Build</button>
+          <div class="modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:20px;border-top:1px solid rgba(139,139,158,0.2)">
+            <span class="category-badge" id="modalCategory" style="display:inline-block;background:rgba(139,139,158,0.1);border:1px solid rgba(139,139,158,0.2);color:#8b8b9e;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;text-transform:uppercase">Category</span>
+            <button class="btn-contact" onclick="contactNow()" style="background:#8b8b9e;color:#ffffff;border:none;padding:12px 28px;border-radius:6px;font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px">Contact for Custom Build</button>
           </div>
         </div>
       </div>
@@ -1662,8 +1655,8 @@
                 <div class="footer-col">
                     <h4 class="footer-heading">Follow Me</h4>
                     <div class="footer-socials">
-                        <a href="https://instagram.com/zernanali" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
-                        <a href="https://youtube.com/@zernanali" target="_blank" class="footer-social"><i class="fab fa-youtube"></i></a>
+                        <a href="https://instagram.com/oops_my_code" target="_blank" class="footer-social"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/@oops_my_code" target="_blank" class="footer-social"><i class="fab fa-youtube"></i></a>
                         <a href="#" class="footer-social"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
                     </div>
@@ -1725,27 +1718,14 @@ const projectData = {
     category: 'Landing Page',
     type: 'Landing Page'
   },
-  'crypto-wallet': {
-    title: 'Secure Wallet',
-    description: 'A premium Web3 cryptocurrency wallet application for managing digital assets across multiple blockchains with military-grade security and a sleek UI.',
-    videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777953811/vnxy7gqfjt9l6mpdxe9h.mp4', // Reusing ChatStudio video as placeholder for 6th item
-    category: 'Mobile App',
-    type: 'Mobile Application'
-  }
 };
 
 // Open video modal with project data
 function openVideoModal(projectId) {
   const project = projectData[projectId];
-
-  if (!project) {
-    console.error('Project not found:', projectId);
-    alert('Project not found');
-    return;
-  }
+  if (!project) return;
 
   console.log('Opening modal for:', projectId);
-  console.log('Video URL:', project.videoUrl);
 
   // Update modal content
   const modalTitle = document.getElementById('modalTitle');
