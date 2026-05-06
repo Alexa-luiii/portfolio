@@ -58,28 +58,23 @@
         }
 
         :root {
-            /* Color Palette - Premium Silent (Muted Purples & Slates) */
-            --primary-dark: #0a0a0f;
-            --primary-light: #fcfcfd;
+            /* Luxury Dark Theme (Primary) */
+            --primary-dark: #0a0a14;
+            --secondary-dark: #1a1a2e;
+            --accent-primary: #d4af37; /* Luxury Gold */
+            --accent-secondary: #c0b368; /* Muted Gold */
+            --accent-tertiary: #9d88d4; /* Soft Purple */
+            --text-primary: #ffffff;
+            --text-secondary: #e0e0e0;
+            --text-muted: #9a9aaa;
+            --card-bg: #141428;
+            --border-gold: rgba(212, 175, 55, 0.2);
 
-            --secondary-dark: #12121a;
-            --secondary-light: #f4f4f7;
-
-            --accent-primary: #8b8b9e;
-            --accent-secondary: #6e6e80;
-            --accent-tertiary: #4a4a5e;
-
-            --text-primary-dark: #ffffff;
-            --text-secondary-dark: #b0b0bc;
-            --text-muted-dark: #6e6e80;
-
-            --text-primary-light: #12121a;
-            --text-secondary-light: #4a4a5e;
-            --text-muted-light: #8b8b9e;
-
-            --border-dark: rgba(139, 139, 158, 0.2);
-            --border-light: rgba(139, 139, 158, 0.25);
-            --border-light-theme: rgba(139, 139, 158, 0.1);
+            /* Light Theme Alternative */
+            --primary-light: #f8f8ff;
+            --secondary-light: #efefff;
+            --text-dark: #1a1a2e;
+            --card-light-bg: #ffffff;
 
             /* Spacing and sizing */
             --border-radius: 12px;
@@ -89,23 +84,23 @@
             /* Theme mapping (Default Dark) */
             --bg-color: var(--primary-dark);
             --bg-secondary: var(--secondary-dark);
-            --text-color: var(--text-primary-dark);
-            --text-color-muted: var(--text-secondary-dark);
-            --card-background: var(--secondary-dark);
-            --border-color: var(--border-dark);
-            --glass-bg: rgba(10, 10, 15, 0.8);
-            --shadow-mapped: rgba(0, 0, 0, 0.5);
+            --text-color: var(--text-primary);
+            --text-color-muted: var(--text-secondary);
+            --card-background: var(--card-bg);
+            --border-color: var(--border-gold);
+            --glass-bg: rgba(10, 10, 20, 0.8);
+            --shadow-mapped: rgba(212, 175, 55, 0.2);
         }
 
         [data-theme="light"] {
             --bg-color: var(--primary-light);
             --bg-secondary: var(--secondary-light);
-            --text-color: var(--text-primary-light);
-            --text-color-muted: var(--text-secondary-light);
-            --card-background: var(--primary-light);
-            --border-color: var(--border-light-theme);
-            --glass-bg: rgba(252, 252, 253, 0.8);
-            --shadow-mapped: rgba(139, 139, 158, 0.1);
+            --text-color: var(--text-dark);
+            --text-color-muted: var(--text-muted);
+            --card-background: var(--card-light-bg);
+            --border-color: rgba(212, 175, 55, 0.1);
+            --glass-bg: rgba(248, 248, 255, 0.8);
+            --shadow-mapped: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -334,8 +329,8 @@
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(circle at 20% 30%, rgba(139, 139, 158, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 139, 158, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-color) 100%);
             background-size: 200% 200%;
             animation: radialMesh 15s ease-in-out infinite;
@@ -344,8 +339,8 @@
 
         [data-theme="light"] .hero::before {
             background:
-                radial-gradient(circle at 20% 30%, rgba(139, 139, 158, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 139, 158, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-color) 100%);
         }
 
@@ -1101,11 +1096,14 @@
   border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 30px;
-  max-width: 90vw;
-  max-height: 90vh;
+  width: auto;
+  max-width: 95vw;
+  max-height: 95vh;
   overflow-y: auto;
   animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: 0 20px 60px var(--shadow-mapped);
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideUp {
@@ -1117,6 +1115,65 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Aspect Ratio Containers */
+.video-container {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Widescreen 16:9 (SaaS Projects) */
+.video-container.widescreen {
+    max-width: 900px;
+}
+
+.video-container.widescreen video {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+}
+
+/* Portrait 9:16 (Mobile Apps) */
+.video-container.portrait {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.video-container.portrait video {
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+}
+
+/* Responsive Overrides */
+@media (min-width: 1024px) {
+    .video-container.widescreen { min-height: 400px; }
+    .video-container.portrait { max-width: 400px; }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+    .video-container.widescreen { max-width: 700px; }
+    .video-container.portrait { max-width: 320px; }
+}
+
+@media (max-width: 767px) {
+    .video-container.portrait {
+        max-height: 60vh;
+        max-width: 100%;
+    }
+    .video-container.portrait video {
+        max-height: 60vh;
+    }
 }
 
 .modal-close {
@@ -1165,7 +1222,7 @@
 
 .btn-contact:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(139, 139, 158, 0.5);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 #projectVideo {
@@ -1259,7 +1316,7 @@
 
 .card-btn:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(139, 139, 158, 0.4);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
     </style>
 </head>
@@ -1398,7 +1455,7 @@
 
               <!-- Card 1: Team Sync Dashboard -->
               <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('team-sync')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #8b8b9e, #6d6d7f); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #d4af37, #9d88d4); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">SaaS</span>
                   <h3>Team Sync Dashboard</h3>
@@ -1409,7 +1466,7 @@
 
               <!-- Card 2: 404 Game Page -->
               <div class="portfolio-card reveal-up" data-category="saas" onclick="openVideoModal('404-game')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #8b8b9e, #a9a9b8); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #d4af37, #d4af37); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">SaaS</span>
                   <h3>404 Game Page</h3>
@@ -1419,8 +1476,8 @@
               </div>
 
               <!-- Card 3: TLC Prep Mobile App -->
-              <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('tlc-prep')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #8b8b9e, #a9a9b8); width:100%; height:100%"></div>
+              <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('tlc-prep')" style="cursor:pointer; aspect-ratio: 9/16; width: 80%; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #d4af37, #d4af37); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Mobile App</span>
                   <h3>TLC Prep</h3>
@@ -1430,8 +1487,8 @@
               </div>
 
               <!-- Card 4: ChatStudio App -->
-              <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('chatstudio')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #8b8b9e, #6d6d7f); width:100%; height:100%"></div>
+              <div class="portfolio-card reveal-up" data-category="mobile" onclick="openVideoModal('chatstudio')" style="cursor:pointer; aspect-ratio: 9/16; width: 80%; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #d4af37, #9d88d4); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Mobile App</span>
                   <h3>ChatStudio</h3>
@@ -1442,7 +1499,7 @@
 
               <!-- Card 5: NovaDash -->
               <div class="portfolio-card reveal-up" data-category="landing" onclick="openVideoModal('novadash')" style="cursor:pointer">
-                <div style="background: linear-gradient(135deg, #a9a9b8, #6d6d7f); width:100%; height:100%"></div>
+                <div style="background: linear-gradient(135deg, #d4af37, #9d88d4); width:100%; height:100%"></div>
                 <div class="card-overlay">
                   <span class="card-category">Landing Page</span>
                   <h3>NovaDash</h3>
@@ -1587,17 +1644,19 @@
 
         <h2 class="modal-title" id="modalTitle">Project Title</h2>
 
-        <video id="projectVideo" controls style="width:100%;border-radius:8px;margin:20px 0;max-height:70vh;background:#000">
-          <source src="" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+        <div class="video-container" id="videoContainer">
+            <video id="projectVideo" controls>
+              <source src="" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+        </div>
 
         <div class="modal-body">
           <p id="modalDescription" style="color:#9a9aaa;font-size:14px;line-height:1.6;margin:0 0 20px 0">Project description goes here.</p>
 
-          <div class="modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:20px;border-top:1px solid rgba(139,139,158,0.2)">
-            <span class="category-badge" id="modalCategory" style="display:inline-block;background:rgba(139,139,158,0.1);border:1px solid rgba(139,139,158,0.2);color:#8b8b9e;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;text-transform:uppercase">Category</span>
-            <button class="btn-contact" onclick="contactNow()" style="background:#8b8b9e;color:#ffffff;border:none;padding:12px 28px;border-radius:6px;font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px">Contact for Custom Build</button>
+          <div class="modal-footer" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:20px;border-top:1px solid rgba(212,175,55,0.2)">
+            <span class="category-badge" id="modalCategory" style="display:inline-block;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);color:#d4af37;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;text-transform:uppercase">Category</span>
+            <button class="btn-contact" onclick="contactNow()" style="background:#d4af37;color:#ffffff;border:none;padding:12px 28px;border-radius:6px;font-weight:600;cursor:pointer;transition:all 0.3s;font-size:14px">Contact for Custom Build</button>
           </div>
         </div>
       </div>
@@ -1688,35 +1747,35 @@ const projectData = {
     description: 'Schedule global meetings in different time zones with real-time sync across all team members. Intelligent time zone conversion and meeting reminder system.',
     videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777954246/uu8eoa9dgof4itcixcjp.mp4',
     category: 'SaaS',
-    type: 'Customized SaaS Project'
+    aspectRatio: 'widescreen'
   },
   '404-game': {
     title: '404 Game Page',
     description: 'Interactive 404 error page game that engages lost website visitors and redirects them back to home. Fully customizable SaaS template for any website.',
     videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777954009/hgrn166ufn148wd03tah.mp4',
     category: 'SaaS',
-    type: 'Customized SaaS Project'
+    aspectRatio: 'widescreen'
   },
   'tlc-prep': {
     title: 'TLC Prep Mobile App',
     description: 'Comprehensive quiz preparation app for driver license certification. Features interactive learning modules, progress tracking, exam simulation, and instant feedback.',
     videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777954335/e8jsyyzktncvhp6ffsnk.mp4',
     category: 'Mobile App',
-    type: 'Mobile Application'
+    aspectRatio: 'portrait'
   },
   'chatstudio': {
     title: 'ChatStudio App',
     description: 'Social chat and story app combining messaging with social features. Create stories through chatting, share memes, and connect with friends in real-time.',
     videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777953811/vnxy7gqfjt9l6mpdxe9h.mp4',
     category: 'Mobile App',
-    type: 'Mobile Application'
+    aspectRatio: 'portrait'
   },
   'novadash': {
     title: 'NovaDash',
     description: 'High-converting SaaS landing page with real-time analytics platform. Features animated hero section, interactive feature showcase, and dynamic pricing tiers.',
     videoUrl: 'https://res.cloudinary.com/dvar7hatl/video/upload/v1777953901/ydqbkbanozd0sptzd1jw.mp4',
     category: 'Landing Page',
-    type: 'Landing Page'
+    aspectRatio: 'widescreen'
   },
 };
 
@@ -1732,6 +1791,7 @@ function openVideoModal(projectId) {
   const projectVideo = document.getElementById('projectVideo');
   const modalDescription = document.getElementById('modalDescription');
   const modalCategory = document.getElementById('modalCategory');
+  const videoContainer = document.getElementById('videoContainer');
 
   if (modalTitle) modalTitle.textContent = project.title;
 
@@ -1743,6 +1803,11 @@ function openVideoModal(projectId) {
   if (modalDescription) modalDescription.textContent = project.description;
 
   if (modalCategory) modalCategory.textContent = project.category;
+
+  // Set Aspect Ratio Class
+  if (videoContainer) {
+    videoContainer.className = 'video-container ' + (project.aspectRatio || 'widescreen');
+  }
 
   // Show modal with animation
   const modal = document.getElementById('videoModal');
